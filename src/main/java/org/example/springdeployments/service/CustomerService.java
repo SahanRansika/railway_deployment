@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -13,40 +14,29 @@ public class CustomerService {
     @Autowired
     private CustomerRepo customerRepo;
 
-    // Get all customers
-    public List<Customer> getAllCustomer() {
+    public List<Customer> getAllCustomers() {
         return customerRepo.findAll();
     }
 
-    // Get customer by ID
-    public Customer getCustomerById(Long id) {
-        return customerRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Customer with ID " + id + " not found"));
+    public Customer getCustomerById(int id) {
+        return customerRepo.findById(id).orElse(null);
     }
-
-    // Save a new customer
-    public Customer saveCustomer(Customer customer) {
+    public Customer createCustomer(Customer customer) {
+        System.out.println("Creating customer: " + customer.getFirstName());
         return customerRepo.save(customer);
     }
 
-    // Update an existing customer
     public Customer updateCustomer(Customer customer) {
-        Customer existing = customerRepo.findById(customer.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
-
-        // Only update fields that changed
-        existing.setFirstname(customer.getFirstname());
-        existing.setLastname(customer.getLastname());
-
-        return customerRepo.save(existing); // Hibernate will handle versioning
+        System.out.println(customer.getId());
+        Optional<Customer> byId = customerRepo.findById(customer.getId());
+        byId.ifPresent(existingCustomer -> {
+            existingCustomer.setFirstName(customer.getFirstName());
+            existingCustomer.setLastName(customer.getLastName());
+        });
+        return customerRepo.save(customer);
     }
 
-
-    // Delete customer by ID
-    public void deleteCustomer(Long id) {
-        if (!customerRepo.existsById(id)) {
-            throw new IllegalArgumentException("Cannot delete: Customer with ID " + id + " not found");
-        }
+    public void deleteCustomer(int id) {
         customerRepo.deleteById(id);
     }
 }

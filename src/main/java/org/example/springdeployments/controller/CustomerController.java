@@ -11,33 +11,27 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/customer")
 public class CustomerController {
-
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Customer>> getAllCustomer() {
-        return ResponseEntity.ok(customerService.getAllCustomer());
+    @GetMapping(value = "/all")
+    public List<Customer> findAll() {
+        return customerService.getAllCustomers();
     }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
-        return ResponseEntity.ok(customerService.getCustomerById(id));
+    @GetMapping
+    public Customer findById(int id) {
+        return customerService.getCustomerById(id);
     }
-
     @PostMapping
-    public ResponseEntity<Customer> creatCustomer(@RequestBody Customer customer) {
-        return ResponseEntity.ok(customerService.saveCustomer(customer));
+    public Customer save(@RequestBody Customer customer) {
+        return customerService.createCustomer(customer);
     }
-
     @PutMapping
-    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) {
-        return ResponseEntity.ok(customerService.updateCustomer(customer));
+    public Customer update(@RequestBody Customer customer) {
+        return customerService.updateCustomer(customer);
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
+    @DeleteMapping
+    public void delete(@RequestBody int id) {
         customerService.deleteCustomer(id);
-        return ResponseEntity.noContent().build();
     }
 }
