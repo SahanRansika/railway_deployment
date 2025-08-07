@@ -12,10 +12,6 @@ public class Customer {
     private String firstname;
     private String lastname;
 
-    @Version
-    private int version; // 👈 Optimistic Locking support
-
-    // 👉 Getters and Setters (Mandatory for JPA)
     public Long getId() {
         return id;
     }
@@ -40,11 +36,4 @@ public class Customer {
         this.lastname = lastname;
     }
 
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
 }
