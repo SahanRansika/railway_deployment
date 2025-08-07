@@ -18,7 +18,7 @@ public class CustomerService {
         return customerRepo.findAll();
     }
 
-    public Customer getCustomerById(int id) {
+    public Customer getCustomerById(Integer id) {
         return customerRepo.findById(id).orElse(null);
     }
     public Customer createCustomer(Customer customer) {
@@ -36,7 +36,7 @@ public class CustomerService {
         return customerRepo.save(customer);
     }
 
-    public void deleteCustomer(int id) {
+    public void deleteCustomer(Integer id) {
         customerRepo.deleteById(id);
     }
 }

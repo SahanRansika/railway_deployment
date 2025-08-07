@@ -3,7 +3,6 @@ package org.example.springdeployments.controller;
 import org.example.springdeployments.entity.Customer;
 import org.example.springdeployments.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class CustomerController {
         return customerService.getAllCustomers();
     }
     @GetMapping
-    public Customer findById(int id) {
+    public Customer findById(Integer id) {
         return customerService.getCustomerById(id);
     }
     @PostMapping
@@ -31,7 +30,7 @@ public class CustomerController {
         return customerService.updateCustomer(customer);
     }
     @DeleteMapping
-    public void delete(@RequestBody int id) {
+    public void delete(@RequestBody Integer id) {
         customerService.deleteCustomer(id);
     }
 }
